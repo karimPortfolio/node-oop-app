@@ -25,10 +25,7 @@ class AuthController {
                 }
             });
 
-            const token =  AuthToken.createToken({
-                email,
-                name
-            });
+            const token =  AuthToken.createToken(user);
 
             return res.status(201).json({
                 token,
@@ -55,7 +52,7 @@ class AuthController {
             const user = await prisma.user.findUnique({
                 where: {
                     email: email
-                }
+                },
             });
 
             if (!user) {   

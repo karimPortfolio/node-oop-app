@@ -1,15 +1,20 @@
 import jwt from 'jsonwebtoken';
+import { AuthConfig } from '../config/auth.js';
 
 class AuthToken {
 
     static createToken(user) {
-        const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+        // exclude password
+        delete user.password;
+        const secret = AuthConfig.getJwtSecretKey();
+        const token = jwt.sign(user, secret, { expiresIn: '1h' });
         return token;
     }
 
     static async verifyToken(token) {
+        const secret = AuthConfig.getJwtSecretKey();
         if (!token) return false;
-        const verified = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const verified = await jwt.verify(token, secret);
         return verified;
     }
 }
