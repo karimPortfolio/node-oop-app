@@ -12,11 +12,13 @@ const upload = Uploads.uploadFile();
 
 router.post("/login", AuthController.login);
 router.post("/register", AuthController.register);
+router.get("/logout", AuthController.logout);
 
 
 router.use(AuthMiddleware.authorization);
 
 //routes inside middleware
+router.get("/me", AuthController.me);
 router.get("/users", UserController.index);
 router.post("/users", UserController.store);
 router.get("/users/:id", UserController.show);

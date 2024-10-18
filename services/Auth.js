@@ -15,7 +15,8 @@ class Auth
     static logout(req, res)
     {
         req.user = null;
-        return res.sendStatus(200);
+        res.clearCookie("access_token");
+        return res.clearCookie("access_token");
     }
 
 }
